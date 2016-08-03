@@ -1,6 +1,8 @@
 defmodule UserInterface.ChoreController do
   use UserInterface.Web, :controller
 
+  import UserInterface.NetworkConnectionHelper
+
   alias UserInterface.Chore
 
   plug :scrub_params, "chore" when action in [:create, :update]
@@ -44,7 +46,9 @@ defmodule UserInterface.ChoreController do
     if chore do
       render(conn, "show.html", chore: chore)
     else
-      render(conn, "done.html")
+      unmark_result = Task.async(fn -> unmark(conn) end)
+
+      render(conn, "done.html", unmark_result: Task.await(unmark_result))
     end
   end
 
