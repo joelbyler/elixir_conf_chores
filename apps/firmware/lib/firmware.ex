@@ -10,6 +10,7 @@ defmodule Firmware do
 
     migrate
     seed
+    setup_network
 
     # Define workers and child supervisors to be supervised
     children = [
