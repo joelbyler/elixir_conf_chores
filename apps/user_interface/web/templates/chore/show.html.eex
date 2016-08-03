@@ -1,0 +1,29 @@
+<h2>Show chore</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @chore.name %>
+  </li>
+
+  <li>
+    <strong>Order:</strong>
+    <%= @chore.order %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @chore.description %>
+  </li>
+
+  <li>
+    <strong>Bonus:</strong>
+    <%= @chore.bonus %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: chore_path(@conn, :edit, @chore) %>
+<%= link "Back", to: chore_path(@conn, :index) %>
+<%= link "Next", to: chore_path(@conn, :next, @chore, class: "button") %>

@@ -1,0 +1,6 @@
+<h2>Edit chore</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: chore_path(@conn, :update, @chore) %>
+
+<%= link "Back", to: chore_path(@conn, :index) %>

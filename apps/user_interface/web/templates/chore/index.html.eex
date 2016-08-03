@@ -1,0 +1,32 @@
+<h2>Listing chores</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Order</th>
+      <th>Description</th>
+      <th>Bonus</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for chore <- @chores do %>
+    <tr>
+      <td><%= chore.name %></td>
+      <td><%= chore.order %></td>
+      <td><%= chore.description %></td>
+      <td><%= chore.bonus %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: chore_path(@conn, :show, chore), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: chore_path(@conn, :edit, chore), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: chore_path(@conn, :delete, chore), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New chore", to: chore_path(@conn, :new) %>
