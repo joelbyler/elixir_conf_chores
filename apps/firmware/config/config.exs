@@ -10,3 +10,23 @@ use Mix.Config
 # Uncomment to use target specific configurations
 
 # import_config "#{Mix.Project.config[:target]}.exs"
+
+config :nerves, :firmware,
+  rootfs_additions: "config/rootfs-additions"
+
+config :user_interface, UserInterface.Endpoint,
+  http: [port: 80],
+  url: [host: "localhost", port: 80],
+  secret_key_base: "LOQ9556hzfXeJ75BJ35g2/oF6bXfyzr+6liQGaB53fJkSSuXjqw/ksdx7/ct+elw",
+  root: Path.dirname(__DIR__),
+  server: true,
+  render_errors: [accepts: ~w(html json)],
+  pubsub: [name: Nerves.PubSub]
+
+config :logger, level: :debug
+
+# Configure your database
+config :user_interface, UserInterface.Repo,
+  adapter: Sqlite.Ecto,
+  database: "/root/nerves.sqlite",
+  pool_size: 20

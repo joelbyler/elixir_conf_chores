@@ -20,12 +20,19 @@ defmodule Firmware.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Firmware, []},
-     applications: [:logger]]
+    [
+      mod: {Firmware, []},
+      applications: [:logger, :nerves_networking, :sqlitex, :user_interface]
+    ]
   end
 
   def deps do
-    [{:nerves, "~> 0.3.0"}]
+    [
+      {:nerves, "~> 0.3.0"},
+      {:nerves_networking, github: "nerves-project/nerves_networking"},
+      {:sqlite_ecto, ">= 0.0.0"},
+      {:user_interface, in_umbrella: true}
+    ]
   end
 
   def system(target) do
@@ -33,8 +40,10 @@ defmodule Firmware.Mixfile do
   end
 
   def aliases do
-    ["deps.precompile": ["nerves.precompile", "deps.precompile"],
-     "deps.loadpaths":  ["deps.loadpaths", "nerves.loadpaths"]]
+    [
+      "deps.precompile": ["nerves.precompile", "deps.precompile"],
+      "deps.loadpaths":  ["deps.loadpaths", "nerves.loadpaths"]
+    ]
   end
 
 end
