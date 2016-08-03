@@ -1,29 +1,31 @@
-<h2>Show chore</h2>
-
-<ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @chore.name %>
-  </li>
-
-  <li>
-    <strong>Order:</strong>
-    <%= @chore.order %>
-  </li>
-
-  <li>
-    <strong>Description:</strong>
-    <%= @chore.description %>
-  </li>
-
-  <li>
-    <strong>Bonus:</strong>
-    <%= @chore.bonus %>
-  </li>
-
-</ul>
-
-<%= link "Edit", to: chore_path(@conn, :edit, @chore) %>
-<%= link "Back", to: chore_path(@conn, :index) %>
-<%= link "Next", to: chore_path(@conn, :next, @chore, class: "button") %>
+<div class="ui centered card">
+  <div class="content">
+    <div class="header"><%= @chore.name %></div>
+  </div>
+  <div class="content">
+    <div class="ui segment">
+    <%= if @chore.bonus do %>
+        Optional bonus chore!
+    <% else %>
+        Required
+    <% end %>
+  </div>
+    <% if @chore.bonus do %>
+    <% end %>
+    <div class="ui small feed">
+      <div class="event">
+        <div class="content">
+          <div class="summary">
+             <%= @chore.description %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="extra content">
+    <%= link to: chore_path(@conn, :next, @chore), class: "ui primary button right floated " do %>
+      Next
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    <% end %>
+  </div>
+</div>

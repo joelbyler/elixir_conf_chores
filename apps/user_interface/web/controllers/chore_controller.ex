@@ -6,8 +6,13 @@ defmodule UserInterface.ChoreController do
   plug :scrub_params, "chore" when action in [:create, :update]
 
   def index(conn, _params) do
-    chores = Repo.all(Chore)
-    render(conn, "index.html", chores: chores)
+    chore = Repo.one(from c in Chore, limit: 1)
+    if chore do
+      render(conn, "show.html", chore: chore)
+    else
+      redirect(conn, to: "/chores/new")
+    end
+
   end
 
   def new(conn, _params) do
@@ -39,7 +44,7 @@ defmodule UserInterface.ChoreController do
     if chore do
       render(conn, "show.html", chore: chore)
     else
-      redirect(conn, to: "/")
+      render(conn, "done.html")
     end
   end
 
@@ -74,4 +79,5 @@ defmodule UserInterface.ChoreController do
     |> put_flash(:info, "Chore deleted successfully.")
     |> redirect(to: chore_path(conn, :index))
   end
+
 end

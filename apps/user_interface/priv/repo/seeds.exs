@@ -30,5 +30,5 @@ Repo.insert! %Chore{
   name: "Complement your neighbor",
   order: 3,
   description: "Its good to make friends",
-  bonus: true
+  bonus: false
 }
