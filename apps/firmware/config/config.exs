@@ -15,8 +15,8 @@ config :nerves, :firmware,
   rootfs_additions: "config/rootfs-additions"
 
 config :user_interface, UserInterface.Endpoint,
-  http: [port: 80],
-  url: [host: "localhost", port: 80],
+  http: [port: 8080],
+  url: [host: "localhost", port: 8080],
   secret_key_base: "LOQ9556hzfXeJ75BJ35g2/oF6bXfyzr+6liQGaB53fJkSSuXjqw/ksdx7/ct+elw",
   root: Path.dirname(__DIR__),
   server: true,

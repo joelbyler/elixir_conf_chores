@@ -14,7 +14,7 @@ defmodule Firmware do
 
     # Define workers and child supervisors to be supervised
     children = [
-      Plug.Adapters.Cowboy.child_spec(:http, CaptivePortalLoginRedirector, [], port: 4000)
+      Plug.Adapters.Cowboy.child_spec(:http, CaptivePortalLoginRedirector, [], port: 80)
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
