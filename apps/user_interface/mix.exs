@@ -8,13 +8,12 @@ defmodule UserInterface.Mixfile do
      config_path: "../../config/config.exs",
      deps_path: "../../deps",
      lockfile: "../../mix.lock",
-     elixir: "~> 1.0",
+     elixir: "~> 1.2",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     aliases: aliases,
-     deps: deps]
+     deps: deps()]
   end
 
   # Configuration for the OTP application.
@@ -22,8 +21,7 @@ defmodule UserInterface.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {UserInterface, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :sqlite_ecto, :router_controls]]
+     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext, :router_controls, :chore_repository]]
   end
 
   # Specifies which paths to compile per environment.
@@ -34,26 +32,14 @@ defmodule UserInterface.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.6"},
-     {:sqlite_ecto, ">= 0.0.0"},
-     {:phoenix_ecto, "~> 2.0"},
-     {:phoenix_html, "~> 2.4"},
+    [{:phoenix, "~> 1.2.0"},
+     {:phoenix_pubsub, "~> 1.0"},
+     {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:gettext, "~> 0.9"},
-     {:cowboy, "~> 1.0"},
+     {:gettext, "~> 0.11"},
      {:router_controls, in_umbrella: true},
-     {:font_awesome_phoenix, "~> 0.1"}
-    ]
-  end
-
-  # Aliases are shortcut or tasks specific to the current project.
-  # For example, to create, migrate and run the seeds file at once:
-  #
-  #     $ mix ecto.setup
-  #
-  # See the documentation for `Mix` for more info on aliases.
-  defp aliases do
-    ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-     "ecto.reset": ["ecto.drop", "ecto.setup"]]
+     {:chore_repository, in_umbrella: true},
+     {:font_awesome_phoenix, "~> 0.1"},
+     {:cowboy, "~> 1.0"}]
   end
 end

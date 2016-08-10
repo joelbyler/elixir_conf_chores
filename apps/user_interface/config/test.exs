@@ -8,9 +8,3 @@ config :user_interface, UserInterface.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
-
-# Configure your database
-config :user_interface, UserInterface.Repo,
-  adapter: Sqlite.Ecto,
-  database: "db/user_interface_test.sqlite",
-  pool: Ecto.Adapters.SQL.Sandbox

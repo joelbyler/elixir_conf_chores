@@ -8,9 +8,8 @@ use Mix.Config
 # Configures the endpoint
 config :user_interface, UserInterface.Endpoint,
   url: [host: "localhost"],
-  root: Path.dirname(__DIR__),
-  secret_key_base: "6q0qxtIrv2NPqfw3t8a0GqhRktyu+w5cZcqNVsZ6DnHAQTRaSKipQAmJ8ssEcSAq",
-  render_errors: [accepts: ~w(html json)],
+  secret_key_base: "ZRd1n/LY1LbGT4lUd+PRK1jLxxQFkoNGiWQDnzOpSaWkvImGmQhMylcjgPCUFrlj",
+  render_errors: [view: UserInterface.ErrorView, accepts: ~w(html json)],
   pubsub: [name: UserInterface.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
@@ -22,8 +21,3 @@ config :logger, :console,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
-
-# Configure phoenix generators
-config :phoenix, :generators,
-  migration: true,
-  binary_id: false
