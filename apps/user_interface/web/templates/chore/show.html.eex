@@ -1,17 +1,13 @@
 <div class="ui centered card">
   <div class="content">
-    <div class="header"><%= @chore.name %></div>
+    <div class="header">
+      <%= @chore.name %>
+      <%= unless @chore.bonus do %>
+        <a class="ui red label">Required</a>
+      <% end %>
+    </div>
   </div>
   <div class="content">
-    <div class="ui segment">
-    <%= if @chore.bonus do %>
-        Optional bonus chore!
-    <% else %>
-        Required
-    <% end %>
-  </div>
-    <% if @chore.bonus do %>
-    <% end %>
     <div class="ui small feed">
       <div class="event">
         <div class="content">

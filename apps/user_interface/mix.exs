@@ -23,7 +23,7 @@ defmodule UserInterface.Mixfile do
   def application do
     [mod: {UserInterface, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :sqlite_ecto]]
+                    :phoenix_ecto, :sqlite_ecto, :router_controls]]
   end
 
   # Specifies which paths to compile per environment.
@@ -41,6 +41,7 @@ defmodule UserInterface.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
+     {:router_controls, in_umbrella: true},
      {:font_awesome_phoenix, "~> 0.1"}
     ]
   end
