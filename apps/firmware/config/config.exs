@@ -30,3 +30,6 @@ config :user_interface, UserInterface.Repo,
   adapter: Sqlite.Ecto,
   database: "/root/nerves.sqlite",
   pool_size: 20
+
+config :chore_repository, :config,
+  file: "/root/chore_repository"
