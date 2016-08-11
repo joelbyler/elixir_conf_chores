@@ -3,6 +3,7 @@
 /db
 /deps
 /*.ez
+/chore_repository_data
 
 # Generated on crash by the VM
 erl_crash.dump

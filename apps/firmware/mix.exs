@@ -37,7 +37,6 @@ defmodule Firmware.Mixfile do
     [
       {:nerves, "~> 0.3.0"},
       {:nerves_networking, github: "nerves-project/nerves_networking"},
-      {:sqlite_ecto, ">= 0.0.0"},
       {:captive_portal_login_redirector, in_umbrella: true},
       {:router_controls, in_umbrella: true},
       {:user_interface, in_umbrella: true}

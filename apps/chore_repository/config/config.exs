@@ -30,4 +30,4 @@ use Mix.Config
 #     import_config "#{Mix.env}.exs"
 
 config :chore_repository, :config,
-  file: "chore_repository"
+  file: "chore_repository_data"
