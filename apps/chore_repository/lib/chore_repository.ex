@@ -39,7 +39,7 @@ defmodule ChoreRepository do
   def seed do
     insert("Attend Joel's Talk", "1", "I think you'll enjoy it.", "true")
     insert("Tweet at Joel", "2", "His twittler account is @joelbyler")
-    insert("Complement your neighbor", "3", "Its good to make friends", "true")
+    insert("Complement your neighbor", "3", "Its good to make friends")
   end
 
 end

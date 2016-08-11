@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header">
       <%= @chore.name %>
-      <%= unless @chore.required do %>
+      <%= if @chore.required do %>
         <a class="ui red label">Required</a>
       <% end %>
     </div>

@@ -4,8 +4,6 @@ defmodule UserInterface.ChoreController do
   import UserInterface.NetworkConnectionHelper
   alias ChoreRepository
 
-  plug :scrub_params, "chore" when action in [:create, :update]
-
   def index(conn, _params) do
     chore = ChoreRepository.next(0)
     render(conn, "show.html", chore: chore)
