@@ -22,7 +22,6 @@ defmodule ChoreRepository do
   end
 
   def next(order) do
-     IO.puts "foo"
      order + 1 |> PersistentStorage.get |> map_to_chore
   end
 

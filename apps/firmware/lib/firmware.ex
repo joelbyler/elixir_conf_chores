@@ -22,22 +22,15 @@ defmodule Firmware do
   end
 
   defp setup_network do
-
-    System.cmd("sysctl", ["-w", "net.ipv4.ip_forward=1"]) |> print_cmd_result
-
+    RouterControls.IpForwarding.forward_ipv4
     Networking.setup(:eth0)
+    RouterControls.Ethernet.start
+    RouterControls.Wifi.start
 
-    System.cmd("ip", ["link", "set", "eth0", "up"]) |> print_cmd_result
-    System.cmd("ip", ["addr", "add", "192.168.1.6/24", "dev", "eth0"]) |> print_cmd_result
-    System.cmd("ip", ["route", "add", "default", "via", "192.168.1.1"]) |> print_cmd_result
+    RouterControls.DnsMasq.start
+    RouterControls.HostApd.start
 
-    System.cmd("ip", ["link", "set", "wlan0", "up"]) |> print_cmd_result
-    System.cmd("ip", ["addr", "add", "192.168.24.1/24", "dev", "wlan0"]) |> print_cmd_result
-
-    System.cmd("dnsmasq", ["--dhcp-lease", "/root/dnsmasq.lease"]) |> print_cmd_result
-
-    System.cmd("hostapd", ["-B", "-d", "/etc/hostapd/hostapd.conf"]) |> print_cmd_result
-
+    # TODO: RouterControls.IpTables.initalize
     System.cmd("setup_iptables", []) |> print_cmd_result
   end
 

@@ -8,7 +8,7 @@ defmodule UserInterface.NetworkConnectionHelper do
   end
 
   def user_mac_address(conn) do
-    user_ip_address(conn) |> fetch_arp |> default_arp |> parse_arp_response
+    user_ip_address(conn) |> fetch_arp |> parse_arp_response
   end
 
   def unmark(conn) do
