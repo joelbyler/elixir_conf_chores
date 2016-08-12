@@ -9,15 +9,16 @@ iptables -X
 
 iptables -A POSTROUTING -t nat -o eth0 -j MASQUERADE
 iptables -t mangle -N internet
-iptables -t mangle -A PREROUTING -i wlan0 -p tcp -m tcp -m multiport --dports 22,80,443 -j internet
+# iptables -t mangle -A PREROUTING -i wlan0 -p tcp -m tcp -m multiport --dports 22,80,443 -j internet
+iptables -t mangle -A PREROUTING -i wlan0 -p tcp -m tcp -j internet
 # iptables -t mangle -A PREROUTING -i wlan0 -p tcp -m tcp -j internet
 iptables -t mangle -A internet -j MARK --set-mark 99
 # not sure if either of these will work
-iptables -A INPUT -m string --algo bm --string "captive.apple.com" -m mark --mark 99 -j DROP
+#iptables -A INPUT -m string --algo bm --string "captive.apple.com" -m mark --mark 99 -j DROP
 # not sure if either of these will work
-iptables -A INPUT -m string --algo kmp --string "captive.apple.com" -m mark --mark 99 -j DROP
-#iptables -t nat -A PREROUTING -i wlan0 -p tcp -m mark --mark 99 -m tcp --dport 80 -j DNAT --to-destination 192.168.24.1
-iptables -t nat -A PREROUTING -i wlan0 -p tcp -m mark --mark 99 -m tcp -j DNAT --to-destination 192.168.24.1:80
+#iptables -A INPUT -m string --algo kmp --string "captive.apple.com" -m mark --mark 99 -j DROP
+iptables -t nat -A PREROUTING -i wlan0 -p tcp -m mark --mark 99 -m tcp --dport 80 -j DNAT --to-destination 192.168.24.1
+#iptables -t nat -A PREROUTING -i wlan0 -p tcp -m mark --mark 99 -m tcp -j DNAT --to-destination 192.168.24.1
 
 #save our iptables
 iptables-save > /root/rules.v4

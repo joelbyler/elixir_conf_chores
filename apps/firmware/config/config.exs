@@ -33,3 +33,5 @@ config :user_interface, UserInterface.Repo,
 
 config :chore_repository, :config,
   file: "/root/chore_repository"
+
+config :router_controls, system_client: System
