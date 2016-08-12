@@ -1,7 +1,7 @@
 defmodule RouterControls.OsCommand do
-  import System
+  @system Application.get_env(:router_controls, :system_client)
 
   def os_cmd(command, arguments) do
-    cmd(command, arguments)
+    @system.cmd(command, arguments)
   end
 end
