@@ -22,5 +22,3 @@ iptables -t nat -A PREROUTING -i wlan0 -p tcp -m mark --mark 99 -m tcp --dport 8
 
 #save our iptables
 iptables-save > /root/rules.v4
-
-iptables -t mangle -A PREROUTING -i wlan0 -p tcp -m tcp -j internet
