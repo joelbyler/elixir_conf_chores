@@ -13,6 +13,7 @@ defmodule UserInterface.Mixfile do
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     aliases: aliases,
      deps: deps()]
   end
 
@@ -41,5 +42,11 @@ defmodule UserInterface.Mixfile do
      {:chore_repository, in_umbrella: true},
      {:font_awesome_phoenix, "~> 0.1"},
      {:cowboy, "~> 1.0"}]
+  end
+
+  def aliases do
+    [
+      "s": ["phoenix.server"],
+    ]
   end
 end
