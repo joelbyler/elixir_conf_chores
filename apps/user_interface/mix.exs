@@ -34,9 +34,9 @@ defmodule UserInterface.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [{:phoenix, "~> 1.2.0"},
-     {:phoenix_pubsub, "~> 1.0"},
-     {:phoenix_html, "~> 2.6"},
-     {:phoenix_live_reload, "~> 1.0", only: :dev},
+     {:phoenix_pubsub, "1.0.0"},
+     {:phoenix_html, "2.6.0"},
+     {:phoenix_live_reload, "~> 1.0.5", only: :dev},
      {:gettext, "~> 0.11"},
      {:router_controls, in_umbrella: true},
      {:chore_repository, in_umbrella: true},

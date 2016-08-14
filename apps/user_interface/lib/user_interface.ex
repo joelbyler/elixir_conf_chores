@@ -14,6 +14,7 @@ defmodule UserInterface do
     children = [
       # Start the endpoint when the application starts
       supervisor(UserInterface.Endpoint, []),
+      supervisor(UserInterface.Presence, []),
       # Start your own worker by calling: UserInterface.Worker.start_link(arg1, arg2, arg3)
       # worker(UserInterface.Worker, [arg1, arg2, arg3]),
     ]
