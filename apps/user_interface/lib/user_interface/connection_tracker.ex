@@ -34,6 +34,7 @@ defmodule UserInterface.ConnectionTracker do
   end
 
   def handle_cast({:step, mac, ip, step}, connections) do
+    IO.puts "next step, #{mac}, #{ip}, #{step}"
     {:noreply, Map.put(connections, mac, %{ip: ip, status: "wip", step: step}) }
   end
 
@@ -59,7 +60,6 @@ defmodule UserInterface.ConnectionTracker do
   end
 
   defp map_to_connection_list(connections) do
-    # %Connection{ mac: "mac", ip: "connection_map.ip", status: "connection_map.status", step: "connection_map.step" }
     Enum.map(Map.to_list(connections), fn(connection) ->
       struct(%Connection{ mac: hd(Tuple.to_list(connection))}, hd(tl(Tuple.to_list(connection))))
     end)

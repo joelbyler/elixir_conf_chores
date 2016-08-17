@@ -1,0 +1,7 @@
+<ul id="user-list"></ul>
+
+<ul>
+<%= for connection <- @connections do %>
+  <li><%= connection.mac %>, <%= connection.ip %>, <%= connection.status %>, <%= connection.step %></li>
+<% end %>
+</ul>

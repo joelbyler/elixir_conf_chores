@@ -6,19 +6,16 @@ defmodule UserInterface.AdminController do
 
   plug :scrub_params, "chore" when action in [:create, :update]
 
-  # def index(conn, _params) do
-  #   connections = current_connections
-  #   render(conn, "show.html", connections: connections)
-  # end
-  #
-  # def next(conn, %{"id" => id}) do
-  #   chore = ChoreRepository.next(String.to_integer(id))
-  #   if chore do
-  #     render(conn, "show.html", chore: chore)
-  #   else
-  #     unmark_result = Task.async(fn -> unmark(conn) end)
-  #
-  #     render(conn, "done.html", unmark_result: Task.await(unmark_result))
-  #   end
-  # end
+  def index(conn, _params) do
+    connections = Task.async(fn -> UserInterface.ConnectionTracker.connections() end)
+    render(conn, "index.html", mac: mac(conn), connections: Task.await(connections))
+  end
+
+  defp mac(conn) do
+    Plug.Conn.get_session(conn, :mac) || Task.await(fetch_mac(conn))
+  end
+  defp fetch_mac(conn) do
+    Task.async(fn -> user_mac_address(conn) end)
+  end
+
 end

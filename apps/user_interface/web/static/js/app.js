@@ -36,6 +36,7 @@ let listBy = (id, {metas: [first, ...rest]}) => {
 }
 
 let render = (presences) => {
+  if (!userList)return;
   userList.innerHTML = Presence.list(presences, listBy)
     .map(presence => "<li>"+presence.mac+ "</li>").join("")
 }

@@ -5,22 +5,18 @@ defmodule UserInterface.ChoreController do
   alias ChoreRepository
 
   def index(conn, _params) do
-    chore = ChoreRepository.next(0)
-
-    render(conn, "show.html", chore: chore, mac: mac(conn))
+    ChoreRepository.next(0)
+      |> render_next(conn)
   end
 
   def next(conn, %{"id" => id}) do
-    UserInterface.ConnectionTracker.step(mac(conn), ip(conn), id)
-    # ChoreRepository.step(mac(conn), ip(conn), id)
     ChoreRepository.next(String.to_integer(id))
       |> render_next(conn)
   end
 
   defp render_next(nil, conn) do
-    unmark_result = Task.async(fn -> unmark(conn) end)
     UserInterface.ConnectionTracker.done(mac(conn), ip(conn))
-    # connections = UserInterface.ConnectionTracker.connections
+    unmark_result = Task.async(fn -> unmark(conn) end)
     connections = Task.async(fn -> UserInterface.ConnectionTracker.connections() end)
     render(conn, "done.html",
       unmark_result: Task.await(unmark_result),
@@ -29,6 +25,7 @@ defmodule UserInterface.ChoreController do
   end
 
   defp render_next(chore, conn) do
+    UserInterface.ConnectionTracker.step(mac(conn), ip(conn), chore.id)
     render(conn, "show.html", chore: chore, mac: mac(conn))
   end
 

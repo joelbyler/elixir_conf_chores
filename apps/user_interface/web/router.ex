@@ -18,6 +18,7 @@ defmodule UserInterface.Router do
 
     get "/", ChoreController, :index
     get "/chores/:id/next", ChoreController, :next
+    get "/connections", AdminController, :index
   end
 
   # Other scopes may use custom stacks.
