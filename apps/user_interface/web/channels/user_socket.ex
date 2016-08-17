@@ -2,7 +2,7 @@ defmodule UserInterface.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "room:*", UserInterface.RoomChannel
+  channel "chore:*", UserInterface.ChoreChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket,
@@ -21,7 +21,7 @@ defmodule UserInterface.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(params, socket) do
-    {:ok, assign(socket, :name, params["name"])}
+    {:ok, assign(socket, :mac, params["mac"])}
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:

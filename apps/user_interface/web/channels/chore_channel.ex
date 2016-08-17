@@ -1,14 +1,14 @@
-defmodule UserInterface.RoomChannel do
+defmodule UserInterface.ChoreChannel do
   use Phoenix.Channel
   alias UserInterface.Presence
 
-  def join("room:" <> _room_name, _message, socket) do
+  def join("chore:" <> _room_name, _message, socket) do
     send(self, :after_join)
     {:ok, socket}
   end
 
   def handle_info(:after_join, socket) do
-    {:ok, _} = Presence.track(socket, socket.assigns.name, %{
+    {:ok, _} = Presence.track(socket, socket.assigns.mac, %{
       status: "online"
     })
     IO.puts(Map.keys(Presence.list(socket)))
@@ -19,7 +19,7 @@ defmodule UserInterface.RoomChannel do
   def handle_in("new_msg", %{"body" => body}, socket) do
     broadcast! socket, "new_msg", %{
       body: body,
-      author: socket.assigns.name,
+      author: socket.assigns.mac,
     }
 
     {:noreply, socket}

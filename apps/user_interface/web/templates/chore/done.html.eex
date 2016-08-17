@@ -5,3 +5,11 @@
   <p>Way to go! You've completed all of your chores!</p>
   <h3>You are now free to continue watching Joel's presentation</h3>
 </div>
+
+<ul id="user-list"></ul>
+
+<ul>
+<%= for connection <- @connections do %>
+  <li><%= connection.mac %>, <%= connection.ip %>, <%= connection.status %>, <%= connection.step %></li>
+<% end %>
+</ul>

@@ -21,24 +21,23 @@ import "phoenix_html"
 // import socket from "./socket"
 
 import {Socket, Presence} from "phoenix"
-console.log(window.userId)
-let socket = new Socket("/socket", {params: {name: window.userId}})
+let socket = new Socket("/socket", {params: {mac: window.mac}})
 
 socket.connect()
 
 let userList = document.getElementById("user-list")
-let room = socket.channel("room:lobby", {})
+let room = socket.channel("chore:lobby", {})
 let presences = {}
 
 let listBy = (id, {metas: [first, ...rest]}) => {
-  first.name = id
+  first.mac = id
   first.count = rest.length + 1
   return first
 }
 
 let render = (presences) => {
-  userList.innerHTML = "<li>test</li>" + Presence.list(presences, listBy)
-    .map(presence => "<li>"+presence.name+ "</li>").join("")
+  userList.innerHTML = Presence.list(presences, listBy)
+    .map(presence => "<li>"+presence.mac+ "</li>").join("")
 }
 
 room.on("presence_state", state => {

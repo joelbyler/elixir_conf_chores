@@ -11,4 +11,9 @@ defmodule RouterControls.Fakes.System do
   def cmd("arp", ["-a"]) do
     {"default.example.com (192.168.1.1) at ab:cd:ef:ab:cd:ef yada.yada", 0}
   end
+
+  def cmd("arp", ["-a", "127.0.0.1"]) do
+    {"foo.example.com (192.168.24.42) at ab:cd:ef:ab:cd:ef yada.yada", 0}
+  end
+
 end

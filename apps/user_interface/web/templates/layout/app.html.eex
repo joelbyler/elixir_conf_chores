@@ -12,7 +12,6 @@
   </head>
 
   <body>
-    <ul id="user-list"></ul>
     <div class="ui container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
@@ -23,7 +22,7 @@
 
     </div> <!-- /container -->
     <script>
-      window.userId = "<%= @conn.params["name"] %>"
+      window.mac = "<%= @mac %>"
     </script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
