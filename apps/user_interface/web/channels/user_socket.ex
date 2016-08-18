@@ -3,7 +3,6 @@ defmodule UserInterface.UserSocket do
 
   ## Channels
   channel "chore:*", UserInterface.ChoreChannel
-  channel "connections:*", UserInterface.ConnectionChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket,
