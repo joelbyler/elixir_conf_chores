@@ -17,11 +17,9 @@ defmodule UserInterface.ChoreController do
   defp render_next(nil, conn) do
     UserInterface.ConnectionTracker.done(mac(conn), ip(conn))
     unmark_result = Task.async(fn -> unmark(conn) end)
-    connections = Task.async(fn -> UserInterface.ConnectionTracker.connections() end)
     render(conn, "done.html",
       unmark_result: Task.await(unmark_result),
-      mac: mac(conn),
-      connections: Task.await(connections))
+      mac: mac(conn))
   end
 
   defp render_next(chore, conn) do

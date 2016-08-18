@@ -8,14 +8,14 @@ defmodule UserInterface.ChoreChannel do
   end
 
   def handle_info(:after_join, socket) do
-    {:ok, _} = Presence.track(socket, socket.assigns.mac, UserInterface.ConnectionTracker.connection(socket.assigns.mac))
+    # TODO: add this back in: {:ok, _} = Presence.track(socket, socket.assigns.mac, UserInterface.ConnectionTracker.connection(socket.assigns.mac))
     push socket, "presence_state", Presence.list(socket)
-    push(socket, "connection_state", %{connections: UserInterface.ConnectionTracker.connections()})
+    # TODO: add this back in: push(socket, "connection_state", %{connections: UserInterface.ConnectionTracker.connections()})
     {:noreply, socket}
   end
 
   def handle_in("fetch_connection_state", msg, socket) do
-    push(socket, "connection_state", %{connections: UserInterface.ConnectionTracker.connections()})
+    # TODO: add this back in: push(socket, "connection_state", %{connections: UserInterface.ConnectionTracker.connections()})
     {:noreply, socket}
   end
 
