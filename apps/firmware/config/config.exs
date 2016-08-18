@@ -19,6 +19,7 @@ config :user_interface, UserInterface.Endpoint,
   url: [host: "localhost", port: 8080],
   secret_key_base: "LOQ9556hzfXeJ75BJ35g2/oF6bXfyzr+6liQGaB53fJkSSuXjqw/ksdx7/ct+elw",
   root: Path.dirname(__DIR__),
+  check_origin: false,
   server: true,
   render_errors: [accepts: ~w(html json)],
   pubsub: [name: Nerves.PubSub]
