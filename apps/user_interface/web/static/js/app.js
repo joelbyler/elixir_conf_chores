@@ -25,66 +25,72 @@ let socket = new Socket("/socket", {params: {mac: window.mac}})
 
 socket.connect()
 
-// connection-list
-let chore_lobby = socket.channel("chore:lobby", {})
-let presences = {}
+// Having trouble trying to get this to actually work when firmware is built
+let worksOnNerves = false
 
-let listBy = (id, {metas: [first, ...rest]}) => {
-  first.mac = id
-  first.count = rest.length + 1
-  return first
+if (worksOnNerves) {
+
+  // connection-list
+  let chore_lobby = socket.channel("chore:lobby", {})
+  let presences = {}
+
+  let listBy = (id, {metas: [first, ...rest]}) => {
+    first.mac = id
+    first.count = rest.length + 1
+    return first
+  }
+
+  let render_captives = (presences) => {
+    let userList = document.getElementById("user-list")
+    if (!userList)return;
+    userList.innerHTML = Presence.list(presences, listBy)
+      .map(presence =>
+        "<tr>" +
+          "<td>" + presence.mac + "</td>" +
+          "<td>" + presence.ip + "</td>" +
+          "<td>" + presence.status + "</td>" +
+          "<td>" + presence.step + "</td>" +
+        "</tr>"
+      ).join("")
+  }
+
+  chore_lobby.on("presence_state", state => {
+    presences = Presence.syncState(presences, state)
+    render_captives(presences)
+  })
+
+  chore_lobby.on("presence_diff", diff => {
+    presences = Presence.syncDiff(presences, diff)
+    render_captives(presences)
+    chore_lobby.push("fetch_connection_state", {})
+  })
+
+  let render_connections = (connections) => {
+    let connectionList = document.getElementById("connection-list")
+    if (!connectionList)return;
+
+    connectionList.innerHTML = connections
+      .map(connection =>
+        "<tr>" +
+          "<td>" + connection.mac + "</td>" +
+          "<td>" + connection.ip + "</td>" +
+          "<td>" + connection.status + "</td>" +
+          "<td>" + connection.step + "</td>" +
+          "<td class=\"right aligned collapsing\">" +
+            "<button data-mac=\"" + connection.mac + "\" class=\"disconnect negative ui button\">Disconnect</button>" +
+          "</td>" +
+        "</tr>"
+      ).join("")
+
+    $(".disconnect").click(function() {
+      console.log("foo")
+      chore_lobby.push("disconnect_user", {mac: mac})
+    });
+  }
+
+  chore_lobby.on("connection_state", state => {
+    render_connections(state.connections)
+  })
+
+  chore_lobby.join()
 }
-
-let render_captives = (presences) => {
-  let userList = document.getElementById("user-list")
-  if (!userList)return;
-  userList.innerHTML = Presence.list(presences, listBy)
-    .map(presence =>
-      "<tr>" +
-        "<td>" + presence.mac + "</td>" +
-        "<td>" + presence.ip + "</td>" +
-        "<td>" + presence.status + "</td>" +
-        "<td>" + presence.step + "</td>" +
-      "</tr>"
-    ).join("")
-}
-
-chore_lobby.on("presence_state", state => {
-  presences = Presence.syncState(presences, state)
-  render_captives(presences)
-})
-
-chore_lobby.on("presence_diff", diff => {
-  presences = Presence.syncDiff(presences, diff)
-  render_captives(presences)
-  chore_lobby.push("fetch_connection_state", {})
-})
-
-let render_connections = (connections) => {
-  let connectionList = document.getElementById("connection-list")
-  if (!connectionList)return;
-
-  connectionList.innerHTML = connections
-    .map(connection =>
-      "<tr>" +
-        "<td>" + connection.mac + "</td>" +
-        "<td>" + connection.ip + "</td>" +
-        "<td>" + connection.status + "</td>" +
-        "<td>" + connection.step + "</td>" +
-        "<td class=\"right aligned collapsing\">" +
-          "<button data-mac=\"" + connection.mac + "\" class=\"disconnect negative ui button\">Disconnect</button>" +
-        "</td>" +
-      "</tr>"
-    ).join("")
-
-  $(".disconnect").click(function() {
-    console.log("foo")
-    chore_lobby.push("disconnect_user", {mac: mac})
-  });
-}
-
-chore_lobby.on("connection_state", state => {
-  render_connections(state.connections)
-})
-
-chore_lobby.join()

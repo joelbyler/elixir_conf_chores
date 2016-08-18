@@ -11,6 +11,12 @@ defmodule UserInterface.AdminController do
     render(conn, "index.html", mac: mac(conn), connections: Task.await(connections))
   end
 
+  def disconnect_user(conn, %{"mac" => mac}) do
+    UserInterface.NetworkConnectionHelper.mark(mac)
+    connections = Task.async(fn -> UserInterface.ConnectionTracker.connections() end)
+    render(conn, "index.html", mac: mac(conn), connections: Task.await(connections))
+  end
+
   defp mac(conn) do
     Plug.Conn.get_session(conn, :mac) || Task.await(fetch_mac(conn))
   end

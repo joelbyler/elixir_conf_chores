@@ -1,3 +1,4 @@
+<!-- TODO: add this back in when I can get presence working on nerves firmware
 <table class="ui celled striped table">
   <thead>
     <tr><th colspan="4">
@@ -5,7 +6,7 @@
     </th>
   </tr></thead>
   <tbody id="user-list"></tbody>
-</table>
+</table> -->
 
 <table class="ui celled striped table">
   <thead>
@@ -13,5 +14,20 @@
       Kown Connections
     </th>
   </tr></thead>
-  <tbody id="connection-list"></tbody>
+  <tbody id="connection-list">
+  <%= for connection <- @connections do %>
+    <tr>
+      <td><%= connection.mac %></td>
+      <td><%= connection.ip %></td>
+      <td><%= connection.status %></td>
+      <td><%= connection.step %></td>
+      <td class="right aligned collapsing">
+        <%= link to: admin_path(@conn, :disconnect_user, connection.mac), class: "disconnect negative ui button" do %>
+          Disconnect
+        <% end %>
+
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
 </table>
