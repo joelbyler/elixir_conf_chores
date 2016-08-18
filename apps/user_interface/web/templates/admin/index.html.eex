@@ -25,7 +25,6 @@
         <%= link to: admin_path(@conn, :disconnect_user, connection.mac), class: "disconnect negative ui button" do %>
           Disconnect
         <% end %>
-
       </td>
     </tr>
   <% end %>
