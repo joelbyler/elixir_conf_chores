@@ -3,6 +3,7 @@ defmodule UserInterface.UserSocket do
 
   ## Channels
   channel "chore:*", UserInterface.ChoreChannel
+  channel "connections:*", UserInterface.ConnectionChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket,
@@ -21,6 +22,7 @@ defmodule UserInterface.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(params, socket) do
+    IO.puts "Calling socket #{Enum.join(Map.keys(params), ", ")}"
     {:ok, assign(socket, :mac, params["mac"])}
   end
 

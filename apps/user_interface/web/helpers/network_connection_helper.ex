@@ -22,4 +22,8 @@ defmodule UserInterface.NetworkConnectionHelper do
     {mac_result, mac_status} = user_mac_address(conn) |> unmark_mac
     [{ip_result, ip_status}, {mac_result, mac_status}]
   end
+
+  def mark(mac) do
+    mark_mac(mac)
+  end
 end

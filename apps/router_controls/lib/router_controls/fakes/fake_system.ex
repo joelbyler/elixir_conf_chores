@@ -17,9 +17,13 @@ defmodule RouterControls.Fakes.System do
       "ab:cd:ef:ab:cd:ef",
       "aa:bb:cc:dd:ee:ff",
       "ff:ee:dd:cc:bb:aa",
-      "ef:cd:ef:ab:cd:ab", 
+      "ef:cd:ef:ab:cd:ab",
     ])
     {"foo.example.com (192.168.24.42) at #{mac} yada.yada", 0}
+  end
+
+  def cmd("iptables", _) do
+    {:ok, 0}
   end
 
 end

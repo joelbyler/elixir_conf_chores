@@ -13,6 +13,7 @@ defmodule UserInterface.ConnectionTracker do
 
   def step(mac, ip, step) do
     GenServer.cast(:connection_tracker, {:step, mac, ip, step})
+    UserInterface.Endpoint.broadcast!("chore:lobby", "connection_update", %{})
   end
 
   def done(mac, ip) do
@@ -20,11 +21,12 @@ defmodule UserInterface.ConnectionTracker do
   end
 
   def connections do
-    IO.puts "here"
     GenServer.call(:connection_tracker, {:connections})
   end
-  def connection(server, name) do
-    GenServer.call(server, {:lookup, name})
+
+  def connection(mac) do
+    IO.puts "connection"
+    GenServer.call(:connection_tracker, {:connection, mac})
   end
   # Server implementation
 
@@ -34,7 +36,6 @@ defmodule UserInterface.ConnectionTracker do
   end
 
   def handle_cast({:step, mac, ip, step}, connections) do
-    IO.puts "next step, #{mac}, #{ip}, #{step}"
     {:noreply, Map.put(connections, mac, %{ip: ip, status: "wip", step: step}) }
   end
 
@@ -44,6 +45,11 @@ defmodule UserInterface.ConnectionTracker do
 
   def handle_call({:connections}, _from, connections) do
     {:reply, map_to_connection_list(connections), connections}
+  end
+
+  def handle_call({:connection, mac}, _from, connections) do
+    IO.puts "handle_call connection"
+    {:reply, { mac, Map.get(connections, mac) } |> map_to_connection, connections}
   end
 
   def handle_call(msg, _from, state) do
@@ -61,8 +67,16 @@ defmodule UserInterface.ConnectionTracker do
 
   defp map_to_connection_list(connections) do
     Enum.map(Map.to_list(connections), fn(connection) ->
-      struct(%Connection{ mac: hd(Tuple.to_list(connection))}, hd(tl(Tuple.to_list(connection))))
+       map_to_connection(connection)
     end)
+  end
+
+  defp map_to_connection({mac, nil}) do
+    IO.puts("junk")
+    %Connection{}
+  end
+  defp map_to_connection(connection) do
+    struct(%Connection{ mac: hd(Tuple.to_list(connection))}, hd(tl(Tuple.to_list(connection))))
   end
 
 end

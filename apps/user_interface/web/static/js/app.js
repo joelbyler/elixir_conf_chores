@@ -25,8 +25,8 @@ let socket = new Socket("/socket", {params: {mac: window.mac}})
 
 socket.connect()
 
-let userList = document.getElementById("user-list")
-let room = socket.channel("chore:lobby", {})
+// connection-list
+let chore_lobby = socket.channel("chore:lobby", {})
 let presences = {}
 
 let listBy = (id, {metas: [first, ...rest]}) => {
@@ -35,18 +35,56 @@ let listBy = (id, {metas: [first, ...rest]}) => {
   return first
 }
 
-let render = (presences) => {
+let render_captives = (presences) => {
+  let userList = document.getElementById("user-list")
   if (!userList)return;
   userList.innerHTML = Presence.list(presences, listBy)
-    .map(presence => "<li>"+presence.mac+ "</li>").join("")
+    .map(presence =>
+      "<tr>" +
+        "<td>" + presence.mac + "</td>" +
+        "<td>" + presence.ip + "</td>" +
+        "<td>" + presence.status + "</td>" +
+        "<td>" + presence.step + "</td>" +
+      "</tr>"
+    ).join("")
 }
 
-room.on("presence_state", state => {
+chore_lobby.on("presence_state", state => {
   presences = Presence.syncState(presences, state)
-  render(presences)
+  render_captives(presences)
 })
-room.on("presence_diff", diff => {
+
+chore_lobby.on("presence_diff", diff => {
   presences = Presence.syncDiff(presences, diff)
-  render(presences)
+  render_captives(presences)
+  chore_lobby.push("fetch_connection_state", {})
 })
-room.join()
+
+let render_connections = (connections) => {
+  let connectionList = document.getElementById("connection-list")
+  if (!connectionList)return;
+
+  connectionList.innerHTML = connections
+    .map(connection =>
+      "<tr>" +
+        "<td>" + connection.mac + "</td>" +
+        "<td>" + connection.ip + "</td>" +
+        "<td>" + connection.status + "</td>" +
+        "<td>" + connection.step + "</td>" +
+        "<td class=\"right aligned collapsing\">" +
+          "<button data-mac=\"" + connection.mac + "\" class=\"disconnect negative ui button\">Disconnect</button>" +
+        "</td>" +
+      "</tr>"
+    ).join("")
+
+  $(".disconnect").click(function() {
+    console.log("foo")
+    chore_lobby.push("disconnect_user", {mac: mac})
+  });
+}
+
+chore_lobby.on("connection_state", state => {
+  render_connections(state.connections)
+})
+
+chore_lobby.join()

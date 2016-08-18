@@ -1,7 +1,17 @@
-<ul id="user-list"></ul>
+<table class="ui celled striped table">
+  <thead>
+    <tr><th colspan="4">
+      Captive Connections
+    </th>
+  </tr></thead>
+  <tbody id="user-list"></tbody>
+</table>
 
-<ul>
-<%= for connection <- @connections do %>
-  <li><%= connection.mac %>, <%= connection.ip %>, <%= connection.status %>, <%= connection.step %></li>
-<% end %>
-</ul>
+<table class="ui celled striped table">
+  <thead>
+    <tr><th colspan="5">
+      Kown Connections
+    </th>
+  </tr></thead>
+  <tbody id="connection-list"></tbody>
+</table>
