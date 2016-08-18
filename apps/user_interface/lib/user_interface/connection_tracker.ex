@@ -47,8 +47,8 @@ defmodule UserInterface.ConnectionTracker do
     {:noreply, Map.put(connections, mac, %{ip: ip, status: "done", step: nil}) }
   end
 
-  def handle_cast({:remove, mac}), connections) do
-    {:noreply, Map.dekete(connections, mac) }
+  def handle_cast({:remove, mac}, connections) do
+    {:noreply, Map.delete(connections, mac) }
   end
 
   def handle_call({:connections}, _from, connections) do
