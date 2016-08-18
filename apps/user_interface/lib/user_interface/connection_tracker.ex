@@ -20,6 +20,10 @@ defmodule UserInterface.ConnectionTracker do
     GenServer.cast(:connection_tracker, {:done, mac, ip})
   end
 
+  def remove(mac) do
+    GenServer.cast(:connection_tracker, {:remove, mac})
+  end
+
   def connections do
     GenServer.call(:connection_tracker, {:connections})
   end
@@ -41,6 +45,10 @@ defmodule UserInterface.ConnectionTracker do
 
   def handle_cast({:done, mac, ip}, connections) do
     {:noreply, Map.put(connections, mac, %{ip: ip, status: "done", step: nil}) }
+  end
+
+  def handle_cast({:remove, mac}), connections) do
+    {:noreply, Map.dekete(connections, mac) }
   end
 
   def handle_call({:connections}, _from, connections) do

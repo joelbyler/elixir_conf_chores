@@ -13,6 +13,7 @@ defmodule UserInterface.AdminController do
 
   def disconnect_user(conn, %{"mac" => mac}) do
     UserInterface.NetworkConnectionHelper.mark(mac)
+    UserInterface.ConnectionTracker.remove(mac)
     connections = Task.async(fn -> UserInterface.ConnectionTracker.connections() end)
     render(conn, "index.html", mac: mac(conn), connections: Task.await(connections))
   end
