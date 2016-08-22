@@ -22,7 +22,7 @@ config :user_interface, UserInterface.Endpoint,
   check_origin: false,
   server: true,
   render_errors: [accepts: ~w(html json)],
-  pubsub: [name: Nerves.PubSub]
+  # pubsub: [name: Nerves.PubSub]
 
 config :logger, level: :debug
 
