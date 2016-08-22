@@ -12,7 +12,8 @@ defmodule Firmware do
 
     # Define workers and child supervisors to be supervised
     children = [
-      Plug.Adapters.Cowboy.child_spec(:http, CaptivePortalLoginRedirector, [], port: 80)
+      Plug.Adapters.Cowboy.child_spec(:http, CaptivePortalLoginRedirector, [], port: 80),
+      supervisor(Phoenix.PubSub.PG2, [Nerves.PubSub, [poolsize: 1]])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -38,7 +39,7 @@ defmodule Firmware do
     System.cmd("hostapd", ["-B", "-d", "/etc/hostapd/hostapd.conf"]) |> print_cmd_result
 
     System.cmd("setup_iptables", []) |> print_cmd_result
-    
+
     # RouterControls.IpForwarding.forward_ipv4
     # Networking.setup(:eth0)
     # RouterControls.Ethernet.start
