@@ -17,7 +17,7 @@
   <tbody id="connection-list">
   <%= for connection <- @connections do %>
     <tr>
-      <td><%= connection.mac %></td>
+      <td><%= connection.mac |> String.split(":") |> List.replace_at(3, "##") |> List.replace_at(4, "##") |> List.replace_at(5, "##") |> Enum.join(":") %></td>
       <td><%= connection.ip %></td>
       <td><%= connection.status %></td>
       <td><%= connection.step %></td>
