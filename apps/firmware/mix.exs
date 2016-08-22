@@ -24,6 +24,7 @@ defmodule Firmware.Mixfile do
       mod: {Firmware, []},
       applications: [
         :logger,
+        :phoenix_pubsub,
         :nerves_networking,
         :sqlitex,
         :captive_portal_login_redirector,
@@ -36,6 +37,7 @@ defmodule Firmware.Mixfile do
   def deps do
     [
       {:nerves, "~> 0.3.0"},
+      {:phoenix_pubsub, "1.0.0"},
       {:nerves_networking, github: "nerves-project/nerves_networking"},
       {:captive_portal_login_redirector, in_umbrella: true},
       {:router_controls, in_umbrella: true},
