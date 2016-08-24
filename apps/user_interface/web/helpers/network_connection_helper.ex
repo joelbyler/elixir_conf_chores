@@ -26,4 +26,8 @@ defmodule UserInterface.NetworkConnectionHelper do
   def mark(mac) do
     mark_mac(mac)
   end
+
+  def admin_mac?(mac) do
+    admin_connection?(mac)
+  end
 end

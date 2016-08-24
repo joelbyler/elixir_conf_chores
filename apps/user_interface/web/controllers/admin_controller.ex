@@ -7,7 +7,7 @@ defmodule UserInterface.AdminController do
   plug :scrub_params, "chore" when action in [:create, :update]
 
   def index(conn, _params) do
-    render_connections(conn, admin_connection?(conn))
+    render_connections(conn, admin_mac?(mac(conn)))
   end
 
   def render_connections(conn, true) do
@@ -17,14 +17,6 @@ defmodule UserInterface.AdminController do
 
   def render_connections(conn, _) do
     redirect(conn, to: "/")
-  end
-
-  defp admin_connection?(conn) do
-    if System.get_env("ADMIN_MAC") do
-      String.upcase(System.get_env("ADMIN_MAC")) == String.upcase(mac(conn))
-    else
-      true
-    end
   end
 
   def disconnect_user(conn, %{"mac" => mac}) do

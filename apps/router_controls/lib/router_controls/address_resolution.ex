@@ -53,4 +53,14 @@ defmodule RouterControls.AddressResolution do
   def parse_arp_response({_, _}) do
     "unkown"
   end
+
+  def admin_connection?(mac) do
+    admin_mac = Application.get_env(:router_controls, :admin_mac)
+    if admin_mac do
+      String.upcase(admin_mac) == String.upcase(mac)
+    else
+      IO.puts "**WARNING! No admin MAC address assigned (ADMIN_MAC)"
+      true
+    end
+  end
 end

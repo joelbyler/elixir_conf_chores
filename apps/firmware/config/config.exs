@@ -36,3 +36,4 @@ config :chore_repository, :config,
   file: "/root/chore_repository"
 
 config :router_controls, system_client: System
+config :router_controls, admin_mac: "#{System.get_env("ADMIN_MAC")}"
