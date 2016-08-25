@@ -11,23 +11,23 @@ defmodule RouterControls.AddressResolution do
       {"default.example.com (192.168.1.1) at ab:cd:ef:ab:cd:ef yada.yada",0}
   """
   def fetch_arp(ip) do
-    os_cmd("arp", ["-a", ip]) |> default_arp
+    os_cmd("arp", ["-a", ip]) |> fallback_arp
   end
 
   @doc ~S"""
   Returns arp result or a default one if previous was unsuccesfull
   ## Examples
-      iex> RouterControls.AddressResolution.default_arp {"yay", 0}
+      iex> RouterControls.AddressResolution.fallback_arp {"yay", 0}
       {"yay", 0}
 
-      iex> RouterControls.AddressResolution.default_arp {"yay", 1}
+      iex> RouterControls.AddressResolution.fallback_arp {"yay", 1}
       {"default.example.com (192.168.1.1) at ab:cd:ef:ab:cd:ef yada.yada",0}
   """
-  def default_arp({arp_result, 0}) do
+  def fallback_arp({arp_result, 0}) do
     {arp_result, 0}
   end
 
-  def default_arp({_, 1}) do
+  def fallback_arp({_, 1}) do
     os_cmd("arp", ["-a"])
   end
 

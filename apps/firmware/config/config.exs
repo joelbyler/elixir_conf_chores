@@ -21,8 +21,9 @@ config :user_interface, UserInterface.Endpoint,
   root: Path.dirname(__DIR__),
   check_origin: false,
   server: true,
-  render_errors: [accepts: ~w(html json)]
-  # pubsub: [name: Nerves.PubSub]
+  render_errors: [accepts: ~w(html json)],
+  pubsub: [name: UserInterface.PubSub,
+           adapter: Phoenix.PubSub.PG2]
 
 config :logger, level: :debug
 
