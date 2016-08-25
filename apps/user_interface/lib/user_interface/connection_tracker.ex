@@ -8,7 +8,12 @@ defmodule UserInterface.ConnectionTracker do
   # Client API
 
   def start_link(opts \\ []) do
-    {:ok, pid} = GenServer.start_link(__MODULE__, [], opts)
+    initial_state = [
+      ets_table_name: :connection_tracker,
+      connections: %{}
+    ]
+
+    {:ok, pid} = GenServer.start_link(__MODULE__, initial_state, opts)
   end
 
   def step(mac, ip, step) do
@@ -34,37 +39,47 @@ defmodule UserInterface.ConnectionTracker do
 
   # Server implementation
 
-  def init([]) do
-    connections = %{}
-    {:ok, connections}
+  def init(args) do
+    [{:ets_table_name, ets_table_name}, {:connections, connections}] = args
+
+    :ets.new(ets_table_name, [:named_table, :set, :private])
+
+    {:ok, %{connections: connections, ets_table_name: ets_table_name}}
   end
 
-  def handle_cast({:step, mac, ip, step}, connections) do
-    {:noreply, Map.put(connections, mac, %{ip: ip, status: "wip", step: step}) }
+  def handle_cast({:step, mac, ip, step}, state) do
+    true = :ets.insert(state.ets_table_name, {mac, %{ip: ip, status: "wip", step: step}})
+    {:noreply, state }
   end
 
-  def handle_cast({:done, mac, ip}, connections) do
-    {:noreply, Map.put(connections, mac, %{ip: ip, status: "done", step: nil}) }
+  def handle_cast({:done, mac, ip}, state) do
+    true = :ets.insert(state.ets_table_name, {mac, %{ip: ip, status: "done", step: nil}})
+    {:noreply, state}
   end
 
-  def handle_cast({:remove, mac}, connections) do
-    {:noreply, Map.delete(connections, mac) }
+  def handle_cast({:remove, mac}, state) do
+    true = :ets.delete(state.ets_table_name, mac)
+    {:noreply, state}
   end
 
-  def handle_call({:connections}, _from, connections) do
-    {:reply, map_to_connection_list(connections), connections}
+  def handle_call({:connections}, _from, state) do
+    connections = :ets.match(state.ets_table_name, :"$1") |> Enum.map( fn(item) -> hd(item) end)
+
+    {:reply, map_to_connection_list(connections), state}
   end
 
-  def handle_call({:connection, mac}, _from, connections) do
-    {:reply, { mac, Map.get(connections, mac) } |> map_to_connection, connections}
+  def handle_call({:connection, mac}, _from, state) do
+    %{ets_table_name: ets_table_name} = state
+    result = :ets.lookup(ets_table_name, mac) |> hd |> map_to_connection
+    {:reply, result, state}
   end
 
-  def handle_call(msg, _from, connections) do
+  def handle_call(msg, _from, state) do
     IO.puts "WARNING: default call in GenServer"
     {:reply, :ok, connections}
   end
 
-  def handle_cast(_msg, connections) do
+  def handle_cast(_msg, state) do
     IO.puts "WARNING: default cast in GenServer"
     {:noreply, connections}
   end
@@ -74,13 +89,12 @@ defmodule UserInterface.ConnectionTracker do
   end
 
   defp map_to_connection_list(connections) do
-    Enum.map(Map.to_list(connections), fn(connection) ->
+    Enum.map(connections, fn(connection) ->
        map_to_connection(connection)
     end)
   end
 
   defp map_to_connection({mac, nil}) do
-    IO.puts("junk")
     %Connection{}
   end
 
