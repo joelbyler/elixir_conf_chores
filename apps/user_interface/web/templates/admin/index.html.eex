@@ -10,7 +10,7 @@
 
 <table class="ui celled striped table">
   <thead>
-    <tr><th colspan="5">
+    <tr><th colspan="4">
       Kown Connections
     </th>
   </tr></thead>
@@ -20,7 +20,6 @@
       <td><%= connection.mac |> String.split(":") |> List.replace_at(3, "##") |> List.replace_at(4, "##") |> List.replace_at(5, "##") |> Enum.join(":") %></td>
       <td><%= connection.ip %></td>
       <td>Status: <%= connection.status %></td>
-      <td>Step: <%= connection.step %></td>
       <td class="right aligned collapsing">
         <%= link to: admin_path(@conn, :disconnect_user, connection.mac), class: "disconnect negative ui button" do %>
           Disconnect
