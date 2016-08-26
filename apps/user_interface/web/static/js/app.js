@@ -26,7 +26,7 @@ let socket = new Socket("/socket", {params: {mac: window.mac}})
 socket.connect()
 
 // Having trouble trying to get this to actually work when firmware is built
-let worksOnNerves = false
+let worksOnNerves = true
 
 if (worksOnNerves) {
 

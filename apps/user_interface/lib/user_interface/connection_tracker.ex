@@ -18,7 +18,7 @@ defmodule UserInterface.ConnectionTracker do
 
   def step(mac, ip, step) do
     GenServer.cast(:connection_tracker, {:step, mac, ip, step})
-    # TODO: add this back in: UserInterface.Endpoint.broadcast!("chore:lobby", "connection_update", %{})
+    UserInterface.Endpoint.broadcast!("chore:lobby", "connection_update", %{})
   end
 
   def done(mac, ip) do

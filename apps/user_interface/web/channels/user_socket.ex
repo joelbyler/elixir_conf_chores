@@ -2,7 +2,7 @@ defmodule UserInterface.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # TODO: ADD THIS BACK IN: channel "chore:*", UserInterface.ChoreChannel
+  channel "chore:*", UserInterface.ChoreChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket,
