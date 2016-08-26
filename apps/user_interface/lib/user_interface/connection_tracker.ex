@@ -70,7 +70,7 @@ defmodule UserInterface.ConnectionTracker do
 
   def handle_call({:connection, mac}, _from, state) do
     %{ets_table_name: ets_table_name} = state
-    result = :ets.lookup(ets_table_name, mac) |> hd |> map_to_connection
+    result = :ets.lookup(ets_table_name, mac)++[{mac, nil}] |> hd |> map_to_connection
     {:reply, result, state}
   end
 
