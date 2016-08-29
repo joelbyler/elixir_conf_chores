@@ -7,7 +7,7 @@ defmodule UserInterface.AdminController do
   plug :scrub_params, "chore" when action in [:create, :update]
 
   def index(conn, _params) do
-    render_connections(conn, admin_mac?(mac(conn)))
+    render_connections(conn, true) # admin_mac?(mac(conn)))
   end
 
   def render_connections(conn, true) do

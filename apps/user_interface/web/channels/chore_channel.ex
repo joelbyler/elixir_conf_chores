@@ -21,6 +21,8 @@ defmodule UserInterface.ChoreChannel do
 
   def handle_in("disconnect_user", msg, socket) do
     UserInterface.NetworkConnectionHelper.mark(msg["mac"])
+    UserInterface.ConnectionTracker.remove(msg["mac"])
+    push(socket, "connection_state", %{connections: UserInterface.ConnectionTracker.connections()})
     {:noreply, socket}
   end
 

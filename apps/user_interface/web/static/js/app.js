@@ -65,6 +65,14 @@ if (worksOnNerves) {
     chore_lobby.push("fetch_connection_state", {})
   })
 
+  let step_or_disconnect = (connection) => {
+    if (connection.status == "done") {
+      return "<td class=\"right aligned collapsing\">" +
+          "<button data-mac=\"" + connection.mac + "\" class=\"disconnect negative ui button\">Disconnect</button>" +
+        "</td>"
+    } else return "<td>" + connection.step + "</td>"
+  }
+
   let render_connections = (connections) => {
     let connectionList = document.getElementById("connection-list")
     if (!connectionList)return;
@@ -74,16 +82,12 @@ if (worksOnNerves) {
         "<tr>" +
           "<td>" + connection.mac + "</td>" +
           "<td>" + connection.ip + "</td>" +
-          "<td>" + connection.status + "</td>" +
-          "<td>" + connection.step + "</td>" +
-          "<td class=\"right aligned collapsing\">" +
-            "<button data-mac=\"" + connection.mac + "\" class=\"disconnect negative ui button\">Disconnect</button>" +
-          "</td>" +
+          "<td>Status:" + connection.status + "</td>" +
+          step_or_disconnect(connection) +
         "</tr>"
       ).join("")
 
     $(".disconnect").click(function() {
-      console.log("foo")
       chore_lobby.push("disconnect_user", {mac: mac})
     });
   }
