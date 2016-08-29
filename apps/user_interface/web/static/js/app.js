@@ -34,19 +34,23 @@ if (worksOnNerves) {
   let chore_lobby = socket.channel("chore:lobby", {})
   let presences = {}
 
-  let listBy = (id, {metas: [first, ...rest]}) => {
+  let list_by = (id, {metas: [first, ...rest]}) => {
     first.mac = id
     first.count = rest.length + 1
     return first
   }
 
+  let mask_mac = (mac) => {
+    return mac.substring(0,9)+"##:##:##"
+  }
+
   let render_captives = (presences) => {
     let userList = document.getElementById("user-list")
     if (!userList)return;
-    userList.innerHTML = Presence.list(presences, listBy)
+    userList.innerHTML = Presence.list(presences, list_by)
       .map(presence =>
         "<tr>" +
-          "<td>" + presence.mac + "</td>" +
+          "<td>" + mask_mac(presence.mac) + "</td>" +
           "<td>" + presence.ip + "</td>" +
           "<td>" + presence.status + "</td>" +
           "<td>" + presence.step + "</td>" +
@@ -80,7 +84,7 @@ if (worksOnNerves) {
     connectionList.innerHTML = connections
       .map(connection =>
         "<tr>" +
-          "<td>" + connection.mac + "</td>" +
+          "<td>" + mask_mac(connection.mac) + "</td>" +
           "<td>" + connection.ip + "</td>" +
           "<td>Status:" + connection.status + "</td>" +
           step_or_disconnect(connection) +
