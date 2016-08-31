@@ -26,7 +26,6 @@ defmodule Firmware.Mixfile do
         :logger,
         :phoenix_pubsub,
         :nerves_networking,
-        :sqlitex,
         :captive_portal_login_redirector,
         :router_controls,
         :user_interface

@@ -13,7 +13,6 @@ defmodule Firmware do
     # Define workers and child supervisors to be supervised
     children = [
       Plug.Adapters.Cowboy.child_spec(:http, CaptivePortalLoginRedirector, [], port: 80),
-      #supervisor(Phoenix.PubSub.PG2, [UserInterface.PubSub, [poolsize: 1]])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -27,9 +26,11 @@ defmodule Firmware do
 
     Networking.setup(:eth0)
 
-    System.cmd("ip", ["link", "set", "eth0", "up"]) |> print_cmd_result
-    System.cmd("ip", ["addr", "add", "192.168.1.6/24", "dev", "eth0"]) |> print_cmd_result
-    System.cmd("ip", ["route", "add", "default", "via", "192.168.1.1"]) |> print_cmd_result
+    # TODO: this will probably break on conference wifi, are these all necessary or is this done via Nerves.Networking?
+    # System.cmd("ip", ["link", "set", "eth0", "up"]) |> print_cmd_result                     # enable eth0
+    # System.cmd("ip", ["addr", "add", "192.168.1.6/24", "dev", "eth0"]) |> print_cmd_result  # assign IP for eth0
+    System.cmd("ip", ["route", "add", "default", "via", "192.168.1.1"]) |> print_cmd_result # default gateway, TODO: move to config
+    # to help with above $ netstat -rn |grep default
 
     System.cmd("ip", ["link", "set", "wlan0", "up"]) |> print_cmd_result
     System.cmd("ip", ["addr", "add", "192.168.24.1/24", "dev", "wlan0"]) |> print_cmd_result
@@ -39,21 +40,11 @@ defmodule Firmware do
     System.cmd("hostapd", ["-B", "-d", "/etc/hostapd/hostapd.conf"]) |> print_cmd_result
 
     System.cmd("setup_iptables", []) |> print_cmd_result
-
-    # RouterControls.IpForwarding.forward_ipv4
-    # Networking.setup(:eth0)
-    # RouterControls.Ethernet.start
-    # RouterControls.Wifi.start
-    #
-    # RouterControls.DnsMasq.start
-    # RouterControls.HostApd.start
-    #
-    # # TODO: RouterControls.IpTables.initalize
-    # System.cmd("setup_iptables", []) |> print_cmd_result
   end
 
   defp print_cmd_result({message, 0}) do
-    IO.puts message
+    # suppress success status output
+    # IO.puts message
   end
 
   defp print_cmd_result({message, err_no}) do
