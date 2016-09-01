@@ -51,7 +51,7 @@ defmodule Firmware do
     IO.puts "ERROR (#{err_no}): #{message}"
   end
 
-  defp disable_eth0?
+  defp disable_eth0? do
     Application.get_env(:firmware, :settings)[:disable_eth0]
   end
 
