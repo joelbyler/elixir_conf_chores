@@ -52,8 +52,6 @@ if (worksOnNerves) {
         "<tr>" +
           "<td>" + mask_mac(presence.mac) + "</td>" +
           "<td>" + presence.ip + "</td>" +
-          "<td>" + presence.status + "</td>" +
-          "<td>" + presence.step + "</td>" +
         "</tr>"
       ).join("")
   }

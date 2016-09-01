@@ -40,7 +40,7 @@ defmodule ChoreRepository do
   def seed do
     insert("Attend Joel's Talk", "1", "I think you'll enjoy it.", "true")
     insert("Tweet at Joel", "2", "Promise to follow or at least mention @joelbyler once connected to wifi")
-    insert("Complement your neighbor", "3", "Its good to make friends at a conference", "true")
+    insert("Compliment your neighbor", "3", "Its good to make friends at a conference", "true")
     insert("Go over the top", "4", "Clap and laugh hysterically!")
     insert("Give Joel a big high five!", "5", "See if you can be the first to give him a high five (or even a hug?). Don't be shy!")
   end
