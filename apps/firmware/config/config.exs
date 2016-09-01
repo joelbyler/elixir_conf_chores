@@ -11,6 +11,10 @@ use Mix.Config
 
 # import_config "#{Mix.Project.config[:target]}.exs"
 
+config :firmware, :settings,
+  default_gateway: "192.168.24.1"
+  disable_eth0: true
+
 config :nerves, :firmware,
   rootfs_additions: "config/rootfs-additions"
 

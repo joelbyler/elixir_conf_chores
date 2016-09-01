@@ -5,7 +5,7 @@ iptables -F
 # Delete all chains in iptables
 iptables -X
 
-iptables -A POSTROUTING -t nat -o eth0 -j MASQUERADE
+iptables -A POSTROUTING -t nat -j MASQUERADE
 
 iptables -t mangle -N internet
 iptables -t mangle -A PREROUTING -i wlan0 -p tcp -m tcp -j internet

@@ -25,12 +25,13 @@ defmodule Firmware do
   defp setup_network do
     System.cmd("sysctl", ["-w", "net.ipv4.ip_forward=1"]) |> print_cmd_result
 
-    # removing eth0 interface for demo
-    # Networking.setup(:eth0)
-    #
-    # System.cmd("ip", ["link", "set", "eth0", "up"]) |> print_cmd_result
-    # System.cmd("ip", ["addr", "add", "192.168.1.6/24", "dev", "eth0"]) |> print_cmd_result
-    System.cmd("ip", ["route", "add", "default", "via", "192.168.24.1"]) |> print_cmd_result
+    unless disable_eth0? do
+      Networking.setup(:eth0)
+      System.cmd("ip", ["link", "set", "eth0", "up"]) |> print_cmd_result
+      System.cmd("ip", ["addr", "add", "192.168.1.6/24", "dev", "eth0"]) |> print_cmd_result
+    end
+
+    System.cmd("ip", ["route", "add", "default", "via", default_gateway]) |> print_cmd_result
 
     System.cmd("ip", ["link", "set", "wlan0", "up"]) |> print_cmd_result
     System.cmd("ip", ["addr", "add", "192.168.24.1/24", "dev", "wlan0"]) |> print_cmd_result
@@ -50,4 +51,11 @@ defmodule Firmware do
     IO.puts "ERROR (#{err_no}): #{message}"
   end
 
+  defp disable_eth0?
+    Application.get_env(:firmware, :settings)[:disable_eth0]
+  end
+
+  defp default_gateway do
+    Application.get_env(:firmware, :settings)[:default_gateway]
+  end
 end
