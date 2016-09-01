@@ -16,6 +16,7 @@ defmodule UserInterface.ChoreController do
 
   defp render_next(nil, conn) do
     UserInterface.ConnectionTracker.done(mac(conn), ip(conn))
+    UserInterface.Endpoint.broadcast("chore:lobby", "fetch_connection_state", %{})
     unmark_result = Task.async(fn -> unmark(conn) end)
     render(conn, "done.html",
       unmark_result: Task.await(unmark_result),
@@ -24,6 +25,7 @@ defmodule UserInterface.ChoreController do
 
   defp render_next(chore, conn) do
     UserInterface.ConnectionTracker.step(mac(conn), ip(conn), chore.id)
+    UserInterface.Endpoint.broadcast("chore:lobby", "fetch_connection_state", %{})
     render(conn, "show.html", chore: chore, mac: mac(conn))
   end
 
