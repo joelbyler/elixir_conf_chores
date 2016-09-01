@@ -1,5 +1,5 @@
 defmodule Connection do
-  defstruct mac: "", ip: "", status: "", step: false
+  defstruct mac: "", ip: "", status: "", step: 0
 end
 
 defmodule UserInterface.ConnectionTracker do
@@ -49,6 +49,7 @@ defmodule UserInterface.ConnectionTracker do
 
   def handle_cast({:step, mac, ip, step}, state) do
     true = :ets.insert(state.ets_table_name, {mac, %{ip: ip, status: "wip", step: step}})
+    IO.puts "Step: #{mac}; #{step}"
     {:noreply, state }
   end
 

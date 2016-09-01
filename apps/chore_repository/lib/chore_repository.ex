@@ -22,11 +22,16 @@ defmodule ChoreRepository do
     })
   end
 
+  def fetch(order) do
+    PersistentStorage.get(order) |> map_to_chore
+  end
+
   def next(order) do
-     order + 1 |> PersistentStorage.get |> map_to_chore
+    order + 1 |> PersistentStorage.get |> map_to_chore
   end
 
   def map_to_chore(nil) do
+    %Chore{ }
   end
 
   def map_to_chore(map) do
