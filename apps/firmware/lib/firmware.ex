@@ -12,7 +12,7 @@ defmodule Firmware do
 
     # Define workers and child supervisors to be supervised
     children = [
-      Plug.Adapters.Cowboy.child_spec(:http, CaptivePortalLoginRedirector, [], port: 80),
+      Plug.Adapters.Cowboy.child_spec(:http, CaptivePortalLoginRedirector, [], port: 8081),
       #supervisor(Phoenix.PubSub.PG2, [UserInterface.PubSub, [poolsize: 1]])
     ]
 
@@ -30,7 +30,7 @@ defmodule Firmware do
     #
     # System.cmd("ip", ["link", "set", "eth0", "up"]) |> print_cmd_result
     # System.cmd("ip", ["addr", "add", "192.168.1.6/24", "dev", "eth0"]) |> print_cmd_result
-    # System.cmd("ip", ["route", "add", "default", "via", "192.168.1.1"]) |> print_cmd_result
+    System.cmd("ip", ["route", "add", "default", "via", "192.168.24.1"]) |> print_cmd_result
 
     System.cmd("ip", ["link", "set", "wlan0", "up"]) |> print_cmd_result
     System.cmd("ip", ["addr", "add", "192.168.24.1/24", "dev", "wlan0"]) |> print_cmd_result
