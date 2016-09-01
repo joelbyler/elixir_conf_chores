@@ -7,20 +7,25 @@ defmodule UserInterface.ChoreController do
   def index(conn, _params) do
     IO.puts "Index #{UserInterface.ConnectionTracker.connection(mac(conn)).step}"
 
+    if chores_done?(mac(conn)) do
+      render_done(conn)
+    end
+
     default_chore(mac(conn))
       |> render_chore(conn)
+  end
 
-    # UserInterface.ConnectionTracker.connection(mac(conn)).step
-    #   |> ChoreRepository.fetch
-    #   |> render_first(conn)
+  defp chores_done?(mac) do
+    connection = UserInterface.ConnectionTracker.connection(mac)
+    connection != nil && connection.status == "done"
   end
 
   defp default_chore(mac) do
     chore = active_chore(mac)
-    if chore == nil || chore.id == 0 do
-      chore = ChoreRepository.next(0)
+    if chore != nil && chore.id != 0 do
+      chore
     end
-    chore
+    ChoreRepository.next(0)
   end
 
   defp active_chore(mac) do
@@ -32,10 +37,6 @@ defmodule UserInterface.ChoreController do
     IO.puts "Next: #{mac(conn)}; #{id}"
     next_chore(String.to_integer(id))
       |> render_chore(conn)
-
-
-    # ChoreRepository.next(String.to_integer(id))
-    #   |> render_next(conn)
   end
 
   defp next_chore(id) do
@@ -53,6 +54,10 @@ defmodule UserInterface.ChoreController do
 
   defp render_chore(%Chore{ id: 0 }, conn) do
     IO.puts "Render with default"
+    render_done(conn)
+  end
+
+  def render_done(conn) do
     UserInterface.ConnectionTracker.done(mac(conn), ip(conn))
     unmark_result = Task.async(fn -> unmark(conn) end)
     render(conn, "done.html",
