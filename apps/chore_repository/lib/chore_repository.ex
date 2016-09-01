@@ -1,5 +1,5 @@
 defmodule Chore do
-  defstruct id: "", name: "", description: "", required: false
+  defstruct id: 0, name: "", description: "", required: false
 end
 
 defmodule ChoreRepository do
