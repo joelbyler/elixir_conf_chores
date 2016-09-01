@@ -28,7 +28,8 @@ defmodule Firmware.Mixfile do
         :nerves_networking,
         :captive_portal_login_redirector,
         :router_controls,
-        :user_interface
+        :user_interface,
+        :the_internet
       ]
     ]
   end
@@ -40,7 +41,8 @@ defmodule Firmware.Mixfile do
       {:nerves_networking, github: "nerves-project/nerves_networking"},
       {:captive_portal_login_redirector, in_umbrella: true},
       {:router_controls, in_umbrella: true},
-      {:user_interface, in_umbrella: true}
+      {:user_interface, in_umbrella: true},
+      {:the_internet, in_umbrella: true}
     ]
   end
 

@@ -25,6 +25,15 @@ config :user_interface, UserInterface.Endpoint,
   pubsub: [name: UserInterface.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :user_interface, TheInternet.Endpoint,
+ http: [port: 8081],
+ url: [host: "localhost", port: 8081],
+ secret_key_base: "LOQ9556hzfXeJ75BJ35g2/oF6bXfyzr+6liQGaB53fJkSSuXjqw/ksdx7/ct+elw",
+ root: Path.dirname(__DIR__),
+ check_origin: false,
+ server: true,
+ render_errors: [accepts: ~w(html json)]
+
 config :logger, level: :debug
 
 config :chore_repository, :config,
