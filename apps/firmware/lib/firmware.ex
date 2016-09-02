@@ -28,7 +28,7 @@ defmodule Firmware do
     unless disable_eth0? do
       Networking.setup(:eth0)
       System.cmd("ip", ["link", "set", "eth0", "up"]) |> print_cmd_result
-      System.cmd("ip", ["addr", "add", "192.168.1.6/24", "dev", "eth0"]) |> print_cmd_result
+      System.cmd("ip", ["addr", "add", "#{static_addr}/24", "dev", "eth0"]) |> print_cmd_result
     end
 
     System.cmd("ip", ["route", "add", "default", "via", default_gateway]) |> print_cmd_result
@@ -57,5 +57,9 @@ defmodule Firmware do
 
   defp default_gateway do
     Application.get_env(:firmware, :settings)[:default_gateway]
+  end
+
+  defp static_addr do
+    Application.get_env(:firmware, :settings)[:static_addr]
   end
 end

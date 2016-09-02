@@ -12,7 +12,8 @@ use Mix.Config
 # import_config "#{Mix.Project.config[:target]}.exs"
 
 config :firmware, :settings,
-  default_gateway: "192.168.24.1",
+  static_addr: "192.168.11.6",
+  default_gateway: "192.168.11.1",
   disable_eth0: true
 
 config :nerves, :firmware,
