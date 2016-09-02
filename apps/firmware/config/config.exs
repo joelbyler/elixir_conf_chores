@@ -14,7 +14,7 @@ use Mix.Config
 config :firmware, :settings,
   static_addr: "192.168.11.6",
   default_gateway: "192.168.11.1",
-  disable_eth0: true
+  disable_eth0: false
 
 config :nerves, :firmware,
   rootfs_additions: "config/rootfs-additions"
