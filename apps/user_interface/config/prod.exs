@@ -19,6 +19,9 @@ config :user_interface, UserInterface.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :chore_repository, :config,
+  file: "chore_repository_data"
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

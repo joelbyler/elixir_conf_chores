@@ -1,5 +1,9 @@
 defmodule RouterControls.Fakes.System do
 
+  def cmd("arp", ["-a", _]) do
+    {"localhost (127.0.0.1) at ab:cd:ef:ga:bc:de foo", 0}
+  end
+
   def cmd("arp", ["-a", "192.168.24.42"]) do
     {"foo.example.com (192.168.24.42) at ab:cd:ef:ab:cd:ef yada.yada", 0}
   end
@@ -22,7 +26,7 @@ defmodule RouterControls.Fakes.System do
     {"foo.example.com (192.168.24.42) at #{mac} yada.yada", 0}
   end
 
-  def cmd("iptables", _) do
+  def cmd(_, _) do
     {:ok, 0}
   end
 

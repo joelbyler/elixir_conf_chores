@@ -8,13 +8,19 @@ defmodule Firmware do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    setup_network
+    {:ok, nil}
 
-    # Define workers and child supervisors to be supervised
-    children = [
-      Plug.Adapters.Cowboy.child_spec(:http, CaptivePortalLoginRedirector, [], port: 80),
-      #supervisor(Phoenix.PubSub.PG2, [UserInterface.PubSub, [poolsize: 1]])
-    ]
+    children = []
+    if System.get_env("WEB_ONLY") != "1" do
+
+      setup_network
+
+      # Define workers and child supervisors to be supervised
+      children = [
+        Plug.Adapters.Cowboy.child_spec(:http, CaptivePortalLoginRedirector, [], port: 80),
+        #supervisor(Phoenix.PubSub.PG2, [UserInterface.PubSub, [poolsize: 1]])
+      ]
+    end
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options

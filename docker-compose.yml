@@ -1,0 +1,10 @@
+# the main image, this is the application
+user_interface:
+  environment:
+    - WEB_ONLY=1
+  build: "."
+  command: sh -c "mix phoenix.server"
+  ports:
+    - "4000:4000"
+  volumes:
+    - .:/app
