@@ -36,7 +36,7 @@ defmodule ChoreRepository.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:persistent_storage, github: "cellulose/persistent_storage"},
+      {:persistent_storage, github: "cellulose/persistent_storage", tag: "v0.9.0"}
     ]
   end
 end

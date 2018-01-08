@@ -23,7 +23,7 @@
   "nerves_toolchain": {:hex, :nerves_toolchain, "0.6.3", "c592ea6a189504b1c130510a3c5c2aaf8b73c994628b43d0195544d718c04fb3", [:mix], []},
   "nerves_toolchain_arm_unknown_linux_gnueabihf": {:hex, :nerves_toolchain_arm_unknown_linux_gnueabihf, "0.6.1", "d2094bdaff79b13a259290363174e4a90079848a951a7b8cbfee2bd2c653fce5", [:mix], [{:nerves_toolchain, "~> 0.6.2", [hex: :nerves_toolchain, optional: false]}]},
   "nerves_wpa_supplicant": {:hex, :nerves_wpa_supplicant, "0.2.2", "da829baec94a8afa7da3a6beaaf1725b9ca7f5f58779ba50b73568b7d37d3d98", [:mix, :make], [{:elixir_make, "~> 0.3", [hex: :elixir_make, optional: false]}]},
-  "persistent_storage": {:git, "https://github.com/cellulose/persistent_storage.git", "cb3080e2051fb936750f51313aa6c8e7b27e581f", []},
+  "persistent_storage": {:git, "https://github.com/cellulose/persistent_storage.git", "25e170286a45701c4784caf337d9908c34a71b3e", [tag: "v0.9.0"]},
   "phoenix": {:hex, :phoenix, "1.2.0", "1bdeb99c254f4c534cdf98fd201dede682297ccc62fcac5d57a2627c3b6681fb", [:mix], [{:cowboy, "~> 1.0", [hex: :cowboy, optional: true]}, {:phoenix_pubsub, "~> 1.0", [hex: :phoenix_pubsub, optional: false]}, {:plug, "~> 1.1", [hex: :plug, optional: false]}, {:poison, "~> 1.5 or ~> 2.0", [hex: :poison, optional: false]}]},
   "phoenix_ecto": {:hex, :phoenix_ecto, "2.0.2", "1aff51d1cd21cc39d7891cae2284399cbf4b8e32fb7864e68f5d272d2934e48a", [:mix], [{:ecto, "~> 1.1.2", [hex: :ecto, optional: false]}, {:phoenix_html, "~> 2.2", [hex: :phoenix_html, optional: true]}, {:poison, "~> 1.3 or ~> 2.0", [hex: :poison, optional: true]}]},
   "phoenix_html": {:hex, :phoenix_html, "2.6.0", "b9f7e091eb3d908586d9634596478fb9e577ee033d76f4ff327a745569bdd2d8", [:mix], [{:plug, "~> 0.13 or ~> 1.0", [hex: :plug, optional: false]}]},

@@ -33,5 +33,7 @@ config :logger, :console, format: "[$level] $message\n"
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
+config :router_controls, system_client: RouterControls.Fakes.System
+
 config :chore_repository, :config,
   file: "chore_repository_data"

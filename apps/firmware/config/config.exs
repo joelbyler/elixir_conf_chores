@@ -5,19 +5,27 @@
 # is restricted to this project.
 use Mix.Config
 
-# Import target specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-# Uncomment to use target specific configurations
+# Customize the firmware. Uncomment all or parts of the following
+# to add files to the root filesystem or modify the firmware
+# archive.
 
-# import_config "#{Mix.Project.config[:target]}.exs"
+config :nerves, :firmware,
+  rootfs_overlay: "config/rootfs_overlay"
+
+# Use bootloader to start the main application. See the bootloader
+# docs for separating out critical OTP applications such as those
+# involved with firmware updates.
+config :bootloader,
+  init: [:nerves_runtime],
+  app: Mix.Project.config[:app]
+
+config :nerves, :firmware,
+  rootfs_overlay: "config/rootfs_overlay"
 
 config :firmware, :settings,
   static_addr: "192.168.11.6",
   default_gateway: "192.168.11.1",
   disable_eth0: false
-
-config :nerves, :firmware,
-  rootfs_additions: "config/rootfs-additions"
 
 config :user_interface, UserInterface.Endpoint,
   http: [port: 8080],
@@ -30,10 +38,13 @@ config :user_interface, UserInterface.Endpoint,
   pubsub: [name: UserInterface.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :nerves_network, :default,
+  wlan0: [ ipv4_address_method: :linklocal ]
+
 config :logger, level: :debug
 
-config :chore_repository, :config,
-  file: "/root/chore_repository"
+# Import target specific config. This must remain at the bottom
+# of this file so it overrides the configuration defined above.
+# Uncomment to use target specific configurations
 
-config :router_controls, system_client: System
-config :router_controls, admin_mac: "#{System.get_env("ADMIN_MAC")}"
+# import_config "#{Mix.Project.config[:target]}.exs"
